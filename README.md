@@ -1,4 +1,3 @@
-sailsjs-boilerplate
-===================
+# tota
 
-Our boilerplate. Not meant to be a wide project
+a [Sails](http://sailsjs.org) application
