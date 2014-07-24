@@ -10,21 +10,23 @@ module.exports = {
   attributes: {
     username: {
       type: "string",
-      unique: "true",
+      unique: true,
+      required: true
 
     },
     email: {
       type: "string",
-      // password: true,
-      unique: "true"
+      email: true,
+      unique: true
     },
     password: {
       type: "string",
-      unique: "true",
-      passports: {
-        collection: "Passport",
-        via: "user"
-      }
+      password: true
+    },
+    passports: {
+      collection: "Passport",
+      via: "user"
     }
   }
+
 };
