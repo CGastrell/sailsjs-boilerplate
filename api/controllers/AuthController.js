@@ -69,6 +69,7 @@ var AuthController = {
     req.logout();
 
     req.session.authenticated = false;
+    req.session.user = undefined;
 
     res.redirect('/');
   },
