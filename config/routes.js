@@ -30,7 +30,7 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  // Following https://github.com/kasperisager/sails-generate-auth/ instructions
+  // Following https://github.com/kasperisager/sails-generate-auth/ instructions -- osk
 
   'get /login': 'AuthController.login',
   'get /logout': 'AuthController.logout',
