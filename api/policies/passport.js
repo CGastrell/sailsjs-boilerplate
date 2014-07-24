@@ -21,14 +21,23 @@
  * @param {Object}   res
  * @param {Function} next
  */
-module.exports = function (req, res, next) {
+module.exports = function(req, res, next) {
+  // Ensure session.authenticated is defined for every controller using this authentication -- osk
+  req.session.authenticated = false;
+
   // Initialize Passport
-  passport.initialize()(req, res, function () {
+  passport.initialize()(req, res, function() {
     // Use the built-in sessions
-    passport.session()(req, res, function () {
+    passport.session()(req, res, function() {
       // Make the user available throughout the frontend
       res.locals.user = req.user;
-
+      // I think I could use passport isAuthenticated method here -- osk
+      // if (req.isAuthenticated()) {
+      //   req.session.authenticated = true;
+      // }      
+      if (req.user) {
+        req.session.authenticated = true;
+      }
       next();
     });
   });

@@ -30,24 +30,24 @@ var AuthController = {
    * @param {Object} req
    * @param {Object} res
    */
-  login: function (req, res) {
-    var strategies = sails.config.passport
-      , providers  = {};
+  login: function(req, res) {
+    var strategies = sails.config.passport,
+      providers = {};
 
     // Get a list of available providers for use in your templates.
-    Object.keys(strategies).forEach(function (key) {
+    Object.keys(strategies).forEach(function(key) {
       if (key === 'local') return;
 
       providers[key] = {
-        name : strategies[key].name
-      , slug : key
+        name: strategies[key].name,
+        slug: key
       };
     });
 
     // Render the `auth/login.ext` view
     res.view({
-      providers : providers
-    , errors    : req.flash('error')
+      providers: providers,
+      errors: req.flash('error')
     });
   },
 
@@ -65,8 +65,11 @@ var AuthController = {
    * @param {Object} req
    * @param {Object} res
    */
-  logout: function (req, res) {
+  logout: function(req, res) {
     req.logout();
+
+    req.session.authenticated = false;
+
     res.redirect('/');
   },
 
@@ -85,7 +88,7 @@ var AuthController = {
    * @param {Object} req
    * @param {Object} res
    */
-  register: function (req, res) {
+  register: function(req, res) {
     res.view({
       errors: req.flash('error')
     });
@@ -97,7 +100,7 @@ var AuthController = {
    * @param {Object} req
    * @param {Object} res
    */
-  provider: function (req, res) {
+  provider: function(req, res) {
     passport.endpoint(req, res);
   },
 
@@ -117,18 +120,18 @@ var AuthController = {
    * @param {Object} req
    * @param {Object} res
    */
-  callback: function (req, res) {
-    function tryAgain () {
+  callback: function(req, res) {
+    function tryAgain() {
       // If an error was thrown, redirect the user to the login which should
       // take care of rendering the error messages.
       req.flash('form', req.body);
       res.redirect(req.param('action') === 'register' ? '/register' : '/login');
     }
 
-    passport.callback(req, res, function (err, user) {
+    passport.callback(req, res, function(err, user) {
       if (err) return tryAgain();
 
-      req.login(user, function (loginErr) {
+      req.login(user, function(loginErr) {
         if (loginErr) return tryAgain();
 
         // Upon successful login, send the user to the homepage were req.user

@@ -1,0 +1,26 @@
+<% if(session.flash && session.flash.err) { %>
+    <ul class="alert alert-success">
+  <% Object.keys(session.flash.err).forEach(function(error) { %>
+    <li><%- JSON.stringify(session.flash.err[error]) %></li>
+  <% }) %>
+  </ul>
+  <% } %>
+  <form role="form" action="/auth/local" method="post">
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" id="" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" placeholder="Password">
+    <p class="help-block"><a href="#">Forgot password</a></p>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox"> Remember me
+    </label>
+  </div>
+  <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+  <button type="submit" class="btn btn-default">Log In</button>
+  <%- partial("partials/social-signup-links") %>
+</form>
