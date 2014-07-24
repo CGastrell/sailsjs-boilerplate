@@ -67,6 +67,20 @@ module.exports = {
 
   environment: process.env.NODE_ENV || 'development',
 
+  // connections config
+  connections: {
+    // Sample connection go mongolab.com
+    mongolab: {
+      adapter: "sails-mongo",
+      host: "ds027709.mongolab.com",
+      schema: true,
+      port: 27709,
+      user: "dbusername",
+      password: "password",
+      database: "dbname"
+    }
+  },
+
   //
   // passport authentication providers config. Set here for
   // avoiding storing keys in repo -- osk
