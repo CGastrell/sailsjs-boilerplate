@@ -1,5 +1,11 @@
-<%=JSON.stringify(session.flash)%>
-<form role="form" action="/auth/local" method="post">
+<% if(session.flash && session.flash.err) { %>
+    <ul class="alert alert-success">
+  <% Object.keys(session.flash.err).forEach(function(error) { %>
+    <li><%- JSON.stringify(session.flash.err[error]) %></li>
+  <% }) %>
+  </ul>
+  <% } %>
+  <form role="form" action="/auth/local" method="post">
   <div class="form-group">
     <label for="email">Email address</label>
     <input type="email" class="form-control" id="" placeholder="Enter email">
@@ -16,5 +22,5 @@
   </div>
   <input type='hidden' name='_csrf' value='<%= _csrf %>'>
   <button type="submit" class="btn btn-default">Log In</button>
-  <p class="help-block"><a   href="#">Sign Up</a></p>
+  <%- partial("partials/social-signup-links") %>
 </form>
