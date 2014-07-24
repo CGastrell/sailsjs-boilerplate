@@ -27,11 +27,15 @@ module.exports.routes = {
   // default view engine) your home page.
   //
   // (Alternatively, remove this and add an `index.html` file in your `assets` directory)
-  '/': {
-    view: 'homepage'
-  },
-  // Following https://github.com/kasperisager/sails-generate-auth/ instructions -- osk
+  // '/': {
+  //   view: 'homepage'
+  // },
 
+  // I do this for having a controller
+  // that can pass through policies. -- osk
+  "/": "HomeController.homepage",
+
+  // Added these routes Following https://github.com/kasperisager/sails-generate-auth/ instructions -- osk
   'get /login': 'AuthController.login',
   'get /logout': 'AuthController.logout',
   'get /register': 'AuthController.register',

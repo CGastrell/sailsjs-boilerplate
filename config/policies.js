@@ -19,7 +19,15 @@ module.exports.policies = {
   // Default policy for all controllers and actions
   // (`true` allows public access)
   //'*': true,
+
+
+  // Pure view routes do not pass through policies 
+  // http://stackoverflow.com/a/21340313/922289 -- osk
+
   "*": ["passport", "sessionAuth"],
+  "home": {
+    "*": "passport"
+  },
 
   "auth": {
     "*": ["passport"]
