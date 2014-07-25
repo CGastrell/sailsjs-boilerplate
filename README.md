@@ -18,7 +18,14 @@ Features
 Installation instructions
 -----
 
- Install SailsJS (globally) and package dependencies
+Clone this repo
+```
+git clone https://github.com/masallahaydragones/sailsjs-boilerplate.git
+```
+
+
+
+Install SailsJS (globally) and package dependencies
 
 ```
 $ sudo npm install -g sails@beta
@@ -36,4 +43,36 @@ And lift sails...
 
 ```
 $ sails lift
+```
+
+#Development
+
+
+Clone this repo
+
+```
+$ git clone https://github.com/masallahaydragones/sailsjs-boilerplate.git
+```
+
+Init git flow
+
+```
+$ git flow init 
+#accept default branch names
+# You will be checked out to develop branch
+```
+
+Start a new feature
+
+
+```
+$ git flow feature start shortFeatureName
+# commit whatever changes are involved by this feature
+# git flow feature start shortFeatureName
+```
+
+Push local develop changes to github
+```
+# Starting from the develop branch
+$ git push origin develop --tags
 ```
