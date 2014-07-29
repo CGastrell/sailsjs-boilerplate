@@ -6,27 +6,34 @@
  */
 
 module.exports = {
-  schema: true,
-  attributes: {
-    username: {
-      type: "string",
-      unique: true,
-      required: true
-
-    },
-    email: {
-      type: "string",
-      email: true,
-      unique: true
-    },
-    password: {
-      type: "string",
-      password: true
-    },
-    passports: {
-      collection: "Passport",
-      via: "user"
+    schema: true,
+    attributes: {
+        username: {
+            type: "string",
+            unique: true,
+            required: true
+        },
+        email: {
+            type: "string",
+            email: true,
+            unique: true
+        },
+        password: {
+            type: "string",
+            password: true
+        },
+        passports: {
+            collection: "Passport",
+            via: "user"
+        },
+        ownApps: {
+            collection: 'App',
+            via: 'owner'
+        },
+        allowedApps: {
+            collection: 'App',
+            via: 'editors'
+        },
     }
-  }
 
 };

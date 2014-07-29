@@ -23,34 +23,34 @@
 module.exports.routes = {
 
 
-  // Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, etc. depending on your
-  // default view engine) your home page.
-  //
-  // (Alternatively, remove this and add an `index.html` file in your `assets` directory)
-  // '/': {
-  //   view: 'homepage'
-  // },
+    // Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, etc. depending on your
+    // default view engine) your home page.
+    //
+    // (Alternatively, remove this and add an `index.html` file in your `assets` directory)
+    // '/': {
+    //   view: 'homepage'
+    // },
 
-  // I do this for having a controller
-  // that can pass through policies. -- osk
-  "/": "HomeController.homepage",
+    // I do this for having a controller
+    // that can pass through policies. -- osk
+    "/": "HomeController.homepage",
 
-  // Added these routes Following https://github.com/kasperisager/sails-generate-auth/ instructions -- osk
-  'get /login': 'AuthController.login',
-  'get /logout': 'AuthController.logout',
-  'get /register': 'AuthController.register',
+    // Added these routes Following https://github.com/kasperisager/sails-generate-auth/ instructions -- osk
+    'get /login': 'AuthController.login',
+    'get /logout': 'AuthController.logout',
+    'get /register': 'AuthController.register',
 
-  'post /auth/local': 'AuthController.callback',
-  'post /auth/local/:action': 'AuthController.callback',
+    'post /auth/local': 'AuthController.callback',
+    'post /auth/local/:action': 'AuthController.callback',
 
-  'get /auth/:provider': 'AuthController.provider',
-  'get /auth/:provider/callback': 'AuthController.callback',
+    'get /auth/:provider': 'AuthController.provider',
+    'get /auth/:provider/callback': 'AuthController.callback',
 
-  // Custom routes here...
+    // Custom routes here...
+    'get /apps': 'AppController.listMyApps',
 
-
-  // If a request to a URL doesn't match any of the custom routes above,
-  // it is matched against Sails route blueprints.  See `config/blueprints.js`
-  // for configuration options and examples.
+    // If a request to a URL doesn't match any of the custom routes above,
+    // it is matched against Sails route blueprints.  See `config/blueprints.js`
+    // for configuration options and examples.
 
 };
