@@ -122,18 +122,25 @@ var AuthController = {
    * @param {Object} res
    */
   callback: function(req, res) {
-    function tryAgain() {
+    function tryAgain(error) {
       // If an error was thrown, redirect the user to the login which should
       // take care of rendering the error messages.
-      req.flash('form', req.body);
+      //req.flash('form', req.body);
+      req.flash('error', error);
+      console.log(error);
       res.redirect(req.param('action') === 'register' ? '/register' : '/login');
     }
 
     passport.callback(req, res, function(err, user) {
-      if (err) return tryAgain();
+
+      if (err) {
+        return tryAgain(err);
+      }
 
       req.login(user, function(loginErr) {
-        if (loginErr) return tryAgain();
+        if (loginErr) {
+          return tryAgain(loginErr);
+        };
 
         // Upon successful login, send the user to the homepage were req.user
         // will available.
