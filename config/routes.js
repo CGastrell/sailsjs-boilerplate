@@ -47,7 +47,10 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback',
 
   // Custom routes here...
-
+  'get /apps': 'AppController.listMyApps',
+  'get /apps/new': 'AppController.newAppForm',
+  'get /apps/:id/edit': 'AppController.viewApp',
+  'post /apps/new': 'AppController.createApp',
 
   // If a request to a URL doesn't match any of the custom routes above,
   // it is matched against Sails route blueprints.  See `config/blueprints.js`
