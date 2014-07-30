@@ -12,7 +12,6 @@ module.exports = {
       type: "string",
       unique: true,
       required: true
-
     },
     email: {
       type: "string",
@@ -26,6 +25,24 @@ module.exports = {
     passports: {
       collection: "Passport",
       via: "user"
+    },
+    ownApps: {
+      collection: 'App',
+      via: 'owner'
+    },
+    allowedApps: {
+      collection: 'App',
+      via: 'editors'
+    },
+    account: {
+      type: 'string',
+      defaultsTo: 'free'
+    },
+    active: {
+      type: 'boolean'
+    },
+    online: {
+      type: 'boolean'
     }
   }
 

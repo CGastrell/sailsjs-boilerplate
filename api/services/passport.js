@@ -1,6 +1,6 @@
-var path     = require('path')
-  , url      = require('url')
-  , passport = require('passport');
+var path = require('path'),
+  url = require('url'),
+  passport = require('passport');
 
 /**
  * Passport Service
@@ -62,10 +62,10 @@ passport.protocols = require('./protocols');
  * @param {Object}   profile
  * @param {Function} next
  */
-passport.connect = function (req, query, profile, next) {
-  var strategies = sails.config.passport
-    , config     = strategies[profile.provider]
-    , user       = {};
+passport.connect = function(req, query, profile, next) {
+  var strategies = sails.config.passport,
+    config = strategies[profile.provider],
+    user = {};
 
   // Set the authentication provider.
   query.provider = req.param('provider');
@@ -88,9 +88,9 @@ passport.connect = function (req, query, profile, next) {
   }
 
   Passport.findOne({
-    provider   : profile.provider
-  , identifier : query.identifier.toString()
-  }, function (err, passport) {
+    provider: profile.provider,
+    identifier: query.identifier.toString()
+  }, function(err, passport) {
     if (err) return next(err);
 
     if (!req.user) {
@@ -98,18 +98,18 @@ passport.connect = function (req, query, profile, next) {
       //           authentication provider.
       // Action:   Create a new user and assign them a passport.
       if (!passport) {
-        User.create(user, function (err, user) {
+        User.create(user, function(err, user) {
           if (err) {
-            if(err.code === "E_VALIDATION"){
-              req.flash('error', err.invalidAttributes.email ? 
+            if (err.code === "E_VALIDATION") {
+              req.flash('error', err.invalidAttributes.email ?
                 'Error.Passport.Email.Exists' : 'Error.Passport.User.Exists');
             }
             return next(err);
           }
-          
+
           query.user = user.id;
 
-          Passport.create(query, function (err, passport) {
+          Passport.create(query, function(err, passport) {
             // If a passport wasn't created, bail out
             if (err) return next(err);
 
@@ -127,7 +127,7 @@ passport.connect = function (req, query, profile, next) {
         }
 
         // Save any updates to the Passport before moving on
-        passport.save(function (err, passport) {
+        passport.save(function(err, passport) {
           if (err) return next(err);
 
           // Fetch the user associated with the Passport
@@ -141,7 +141,7 @@ passport.connect = function (req, query, profile, next) {
       if (!passport) {
         query.user = req.user.id;
 
-        Passport.create(query, function (err, passport) {
+        Passport.create(query, function(err, passport) {
           // If a passport wasn't created, bail out
           if (err) return next(err);
 
@@ -166,10 +166,10 @@ passport.connect = function (req, query, profile, next) {
  * @param  {Object} req
  * @param  {Object} res
  */
-passport.endpoint = function (req, res) {
-  var strategies = sails.config.passport
-    , provider   = req.param('provider')
-    , options    = {};
+passport.endpoint = function(req, res) {
+  var strategies = sails.config.passport,
+    provider = req.param('provider'),
+    options = {};
 
   // If a provider doesn't exist for this endpoint, send the user back to the
   // login page
@@ -198,20 +198,18 @@ passport.endpoint = function (req, res) {
  * @param {Object}   res
  * @param {Function} next
  */
-passport.callback = function (req, res, next) {
-  var provider = req.param('provider', 'local')
-    , action   = req.param('action');
+passport.callback = function(req, res, next) {
+  var provider = req.param('provider', 'local'),
+    action = req.param('action');
 
   // Passport.js wasn't really built for local user registration, but it's nice
   // having it tied into everything else.
   if (provider === 'local' && action !== undefined) {
     if (action === 'register' && !req.user) {
       this.protocols.local.register(req, res, next);
-    }
-    else if (action === 'connect' && req.user) {
+    } else if (action === 'connect' && req.user) {
       this.protocols.local.connect(req, res, next);
-    }
-    else {
+    } else {
       next(new Error('Invalid action'));
     }
   } else {
@@ -245,17 +243,22 @@ passport.callback = function (req, res, next) {
  * http://passportjs.org/guide/providers/
  *
  */
-passport.loadStrategies = function () {
-  var self       = this
-    , strategies = sails.config.passport;
+passport.loadStrategies = function() {
+  var self = this,
+    strategies = sails.config.passport;
 
-  Object.keys(strategies).forEach(function (key) {
-    var options = { passReqToCallback: true }, Strategy;
+  Object.keys(strategies).forEach(function(key) {
+    var options = {
+        passReqToCallback: true
+      },
+      Strategy;
 
     if (key === 'local') {
       // Since we need to allow users to login using both usernames as well as
       // emails, we'll set the username field to something more generic.
-      _.extend(options, { usernameField: 'identifier' });
+      _.extend(options, {
+        usernameField: 'identifier'
+      });
 
       // Only load the local strategy if it's enabled in the config
       if (strategies.local) {
@@ -264,17 +267,17 @@ passport.loadStrategies = function () {
         self.use(new Strategy(options, self.protocols.local.login));
       }
     } else {
-      var protocol = strategies[key].protocol
-        , callback = strategies[key].callback;
+      var protocol = strategies[key].protocol,
+        callback = strategies[key].callback;
 
       if (!callback) {
         callback = path.join('auth', key, 'callback');
       }
 
       Strategy = strategies[key].strategy;
-      
+
       var baseUrl = sails.getBaseurl();
-      
+
       switch (protocol) {
         case 'oauth':
         case 'oauth2':
@@ -283,8 +286,8 @@ passport.loadStrategies = function () {
 
         case 'openid':
           options.returnURL = url.resolve(baseUrl, callback);
-          options.realm     = baseUrl;
-          options.profile   = true;
+          options.realm = baseUrl;
+          options.profile = true;
           break;
       }
 
@@ -298,12 +301,12 @@ passport.loadStrategies = function () {
   });
 };
 
-passport.serializeUser(function (user, next) {
+passport.serializeUser(function(user, next) {
   next(null, user.id);
 });
 
-passport.deserializeUser(function (id, next) {
-  User.findOne(id, next);
+passport.deserializeUser(function(id, next) {
+  User.findOne(id).populate('ownApps').exec(next);
 });
 
 module.exports = passport;

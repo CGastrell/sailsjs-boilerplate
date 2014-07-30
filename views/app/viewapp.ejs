@@ -1,0 +1,37 @@
+<div class="col-md-12">
+  <h2>App settings menu view</h2>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class=""><a href="#smartphone" role="tab" data-toggle="tab"><i class="fa fa-mobile fa-1x"></i> Design settings Smart phone</a></li>
+        <li class=""><a href="#tablet" role="tab" data-toggle="tab"><i class="fa fa-tablet fa-1x"></i> Tablet design settings</a></li>
+        <li><a href="#content" role="tab" data-toggle="tab"><i class="fa fa-list fa-1x"></i> Content</a></li>
+        <li class="active"><a href="#settings" role="tab" data-toggle="tab"><i class="fa fa-gears fa-1x"></i> Settings</a></li>
+        <li><a href="#engage" role="tab" data-toggle="tab"><i class="fa fa-credit-card fa-1x"></i> Engage</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane" id="smartphone"><h3>Smartphone settings Design </h3></div>
+        <div class="tab-pane" id="tablet"><h3>Tablet design settings</h3></div>
+        <div class="tab-pane" id="content"><h3>Content</h3></div>
+        <div class="tab-pane active" id="settings">
+          <h3>Settings</h3>
+          <form role="form" action="/apps/new" method="PUT" id="appDetailsUpdate">
+            <div class="form-group">
+              <label for="name">App name</label>
+              <input type="name" class="form-control" name="name" id="name" value="<%= appdata.name %>">
+            </div>
+            <div class="form-group">
+              <label for="description">App description</label>
+              <input type="description" class="form-control" name="description" id="description" value="<%= appdata.description %>">
+            </div>
+            <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+            <button type="submit" class="btn btn-default">Update app</button>
+
+          </form>
+
+        </div>
+        <div class="tab-pane" id="engage"><h3>Engage</h3></div>
+      </div>
+    </div>
+  </div>
+</div>
