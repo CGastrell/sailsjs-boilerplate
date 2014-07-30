@@ -67,13 +67,17 @@ module.exports = {
 
   environment: process.env.NODE_ENV || 'development',
 
+  
+  host: "http://platform.shovelapps.com:1337/",
+
   // *this* product custom data
   // Used in views mainly (even email views)
   // This may not be an elegan approach
   // but I wanted to keep it simple for this boilerplate. -- osk
   product: {
     name: "Better World",
-    companyName: "Better World Inc."
+    companyName: "Better World Inc.",
+
   },
 
   // connections config
