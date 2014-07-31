@@ -41,21 +41,20 @@
       /* Padding to overcome fixed top navbar */
       body {
         margin-top: 60px;
-        padding-top: 20px;
+
       }
 
-      .navbar-default .navbar-nav li a {
-        /*height:60px;*/
+      .navbar-nav > li > a {
         font-size: 16px;
         line-height: 25px;
         padding-top: 17.5px;
         padding-bottom: 17.5px;
-        color: #fff;
+
       }
 
-      .navbar .navbar-brand {
+/*      .navbar .navbar-brand {
         padding: 20px 20px;
-      }
+      }*/
     </style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
   </head>
@@ -76,11 +75,34 @@
                 </ul>
               </div>
             <% } %>        
-          
-            <%-body%>
+            <div id="page-wrapper">
+              <%-body%>
+            </div>
         </div>
       </div>
     </div>  
+    <footer style="background:#ccc">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-4">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="/pricing">Resellers</a></li>
+            <li><a href="/resellers">Resellers</a></li>
+          </ul>
+          </div>
+          <div class="col-md-4">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-8">
+          2014 &mdash; <%=sails.config.product.name%>
+          </div>
+        </div>
+      </div>
+    </footer>
 
 
 
