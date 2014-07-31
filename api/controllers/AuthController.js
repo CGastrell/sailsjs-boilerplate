@@ -36,8 +36,9 @@ var AuthController = {
 
     // Get a list of available providers for use in your templates.
     Object.keys(strategies).forEach(function(key) {
-      if (key === 'local') return;
-
+      if (key === 'local') {
+        return;
+      }
       providers[key] = {
         name: strategies[key].name,
         slug: key
@@ -46,8 +47,7 @@ var AuthController = {
 
     // Render the `auth/login.ext` view
     res.view({
-      providers: providers,
-      errors: req.flash('error')
+      providers: providers
     });
   },
 
@@ -90,9 +90,7 @@ var AuthController = {
    * @param {Object} res
    */
   register: function(req, res) {
-    res.view({
-      errors: req.flash('error')
-    });
+    res.view();
   },
 
   /**
@@ -122,24 +120,31 @@ var AuthController = {
    * @param {Object} res
    */
   callback: function(req, res) {
+
     function tryAgain(error) {
       // If an error was thrown, redirect the user to the login which should
       // take care of rendering the error messages.
       //req.flash('form', req.body);
-      req.flash('error', error);
-      console.log(error);
+
       res.redirect(req.param('action') === 'register' ? '/register' : '/login');
     }
 
-    passport.callback(req, res, function(err, user) {
+    function loginAgain(error) {
+      res.redirect('/login');
+    }
 
+    passport.callback(req, res, function(err, user) {
+      
       if (err) {
+        req.flash("error", "There were some errors registering user");
         return tryAgain(err);
       }
 
       req.login(user, function(loginErr) {
         if (loginErr) {
-          return tryAgain(loginErr);
+          req.flash("error", "Please check your email and password");
+          console.log(JSON.stringify(loginErr.stack));
+          return loginAgain(loginErr);
         };
 
         // Upon successful login, send the user to the homepage were req.user
