@@ -1,4 +1,3 @@
-<%= req.flash("error") %>
 <form role="form" action="/auth/local/register" method="post">
   <div class="form-group">
     <label for="email">Email address</label>
@@ -13,7 +12,7 @@
     <input name="password" type="password" class="form-control" id="password" placeholder="Password">
   </div>
   <input type='hidden' name='_csrf' value='<%= _csrf %>'>
-  <button type="submit" class="btn btn-default">Sign Up</button>
+  <button type="submit" class="btn btn-primary">Sign Up</button>
   <p class="help-block"> By clicking the Sign Up button you agree with
   <%= sails.config.product.companyName %> <a href="#">Terms of service</a> and <a href="#">Privacy policy</a></p>
   <%- partial("partials/social-signup-links") %>

@@ -1,22 +1,16 @@
-<% if(session.flash && session.flash.err) { %>
-    <ul class="alert alert-success">
-  <% Object.keys(session.flash.err).forEach(function(error) { %>
-    <li><%- JSON.stringify(session.flash.err[error]) %></li>
-  <% }) %>
-  </ul>
-  <% } %>
+
   <form role="form" action="/auth/local" method="post">
   <div class="form-group">
     <label for="email">Email address</label>
-    <input type="email" class="form-control" id="email" placeholder="Enter email">
+    <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
   </div>
   <div class="form-group">
     <label for="password">Password</label>
-    <input type="password" class="form-control" id="password" placeholder="Password">
+    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
     <p class="help-block"><a href="#">Forgot password</a></p>
   </div>
   <div class="checkbox">
-    <label>
+    <label style="display:none">
       <input type="checkbox"> Remember me
     </label>
   </div>

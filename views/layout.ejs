@@ -65,12 +65,22 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          <% 
+            error = req.flash("error");
+            if(error.length) { %>
+              <div class="alert alert-danger" role="alert">
+                <ul>
+                <% error.forEach(function(err) { %>
+                  <li><%= err %></li>
+                <% }) %>
+                </ul>
+              </div>
+            <% } %>        
           
-          <%- body %>
-          
+            <%-body%>
         </div>
       </div>
-    </div>
+    </div>  
 
 
 
