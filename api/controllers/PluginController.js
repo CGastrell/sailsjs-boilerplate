@@ -6,6 +6,19 @@
  */
 
 module.exports = {
-	
-};
+    listMyPlugins: function(req, res) {
 
+    },
+    createPlugin: function(req, res) {
+
+    },
+    viewPlugin: function(req, res) {
+
+    },
+    updatePlugin: function(req, res) {
+
+    },
+    destroyPlugin: function(req, res) {
+
+    }
+};

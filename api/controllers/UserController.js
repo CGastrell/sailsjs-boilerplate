@@ -6,5 +6,10 @@
  */
 
 module.exports = {
+    viewUser: function(req, res) {
 
+    },
+    updateUser: function(req, res) {
+
+    }
 };
