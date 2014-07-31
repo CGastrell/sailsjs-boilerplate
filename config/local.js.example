@@ -72,8 +72,8 @@ module.exports = {
   // This may not be an elegan approach
   // but I wanted to keep it simple for this boilerplate. -- osk
   product: {
-    name: "Shovel Apps",
-    companyName: "Shovel Apps Inc."
+    name: "Better World",
+    companyName: "Better World Inc."
   },
 
   // connections config

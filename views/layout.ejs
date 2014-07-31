@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>New Sails App</title>
+    <title><%= sails.config.product.name %> - <%= title%></title>
 
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css">
+ 
 
 
     
@@ -34,8 +34,29 @@
     -->
 
     <!--STYLES-->
+    <link rel="stylesheet" href="/styles/custom.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <!--STYLES END-->
+    <style type="text/css">
+      /* Padding to overcome fixed top navbar */
+      body {
+        margin-top: 60px;
+        padding-top: 20px;
+      }
+
+      .navbar-default .navbar-nav li a {
+        /*height:60px;*/
+        font-size: 16px;
+        line-height: 25px;
+        padding-top: 17.5px;
+        padding-bottom: 17.5px;
+        color: #fff;
+      }
+
+      .navbar .navbar-brand {
+        padding: 20px 20px;
+      }
+    </style>
   </head>
 
   <body>
@@ -103,6 +124,7 @@
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://js.recurly.com/v3/recurly.js"></script>
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
     <!--SCRIPTS END-->
