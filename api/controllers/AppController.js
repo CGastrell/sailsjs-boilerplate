@@ -4,6 +4,7 @@
  * @description :: Server-side logic for managing apps
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
+"use strict";
 
 module.exports = {
   listMyApps: function(req, res) {
@@ -18,7 +19,7 @@ module.exports = {
   newAppForm: function(req, res) {
     res.view();
   },
-  createApp: function(req, res) {
+  createAppEx: function(req, res) {
     // console.log(req.allParams());
     // return;
     App.create({
@@ -47,5 +48,53 @@ module.exports = {
         appdata: app
       });
     });
+  },
+  //rest - json only actions --cg
+  /**
+   * Adds a plugin (by id) to the app plugins collection (app.plugins)
+   *
+   * App MUST be owned by logged in user
+   *
+   * @param app_id
+   * @param plugin_id
+   *
+   * @todo chequear que el plugin PUEDA ser agregado (esta pago o es free)
+   */
+  addPlugin: function(req, res) {
+    var appId = req.param('id');
+    var pluginId = req.param('plugin_id');
+    App.findOne(appId)
+      .populate('plugins')
+      .exec(function appFound(err, app) {
+        app.plugins.add(pluginId);
+        app.save(function(err) {
+          if (err) {
+            return res.json(err);
+          }
+        });
+        return res.json(app.toObject());
+      });
+  },
+  getPlugins: function(req, res) {
+
+  },
+  /**
+   * Creates an app
+   *
+   * app.owner is set by logged in user
+   *
+   * params according to models/app
+   *
+   */
+  createApp: function(req, res) {
+    var attrs = req.allParams();
+    App.create(attrs).done(function appCreated(err, app) {
+      if (err)
+        return res.json(err);
+
+      res.json(app);
+    });
+    // console.log(attrs);
+    // res.json(attrs);
   }
 };
