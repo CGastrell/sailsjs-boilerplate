@@ -68,7 +68,7 @@ module.exports = {
   environment: process.env.NODE_ENV || 'development',
 
   
-  host: "http://platform.shovelapps.com:1337/",
+  host: "localhost",
 
   // *this* product custom data
   // Used in views mainly (even email views)
