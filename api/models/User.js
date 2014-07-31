@@ -44,6 +44,5 @@ module.exports = {
     online: {
       type: 'boolean'
     }
-  }
 
-};
+  };
