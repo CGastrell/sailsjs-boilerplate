@@ -25,6 +25,7 @@ module.exports.policies = {
   // http://stackoverflow.com/a/21340313/922289 -- osk
 
   "*": ["passport", "sessionAuth"],
+
   "home": {
     "*": "passport"
   },
@@ -32,6 +33,22 @@ module.exports.policies = {
   "auth": {
     "*": ["passport"]
   },
+
+  "app": {
+    "": ["passport", "sessionAuth", "isAppOwnerOrEditor"]
+  },
+
+  "plugin": {
+    "update": ["passport", "sessionAuth", "isPluginOwner"],
+    "destroy": ["passport", "sessionAuth", "isPluginOwner"]
+  },
+
+  "template": {
+    "update": ["passport", "sessionAuth", "isTemplateOwner"],
+    "destroy": ["passport", "sessionAuth", "isTemplateOwner"]
+  },
+
+
   // Here's an example of mapping some policies to run before
   // a controller and its actions
   // RabbitController: {

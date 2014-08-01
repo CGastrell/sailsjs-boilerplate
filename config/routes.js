@@ -55,28 +55,31 @@ module.exports.routes = {
 
   //routes para user rest api
   'get /me': 'UserController.viewUser',
-  'put /me': 'UserController.updateUser',
+  'put /me': 'UserController.update',
+  'get /me/plugin': 'PluginController.listMyPlugins',
+  'get /me/template': 'TemplateController.listMyTemplates',
+
 
   //routes para plugin rest api
-  'get /plugin': 'PluginController.listMyPlugins',
-  'post /plugin': 'PluginController.createPlugin',
-  'get /plugin/:pluginId': 'PluginController.viewPlugin',
-  'put /plugin/:pluginId': 'PluginController.updatePlugin',
-  'delete /plugin/:pluginId': 'PluginController.destroyPlugin',
+  'get /plugin': 'PluginController.find',
+  'post /plugin': 'PluginController.create',
+  'get /plugin/:pluginId': 'PluginController.findOne',
+  'put /plugin/:pluginId': 'PluginController.update',
+  'delete /plugin/:pluginId': 'PluginController.destroy',
 
   //routes para template rest api
-  'get /template': 'TemplateController.listMyTemplates',
-  'post /template': 'TemplateController.createTemplate',
-  'get /template/:templateId': 'TemplateController.viewTemplate',
-  'put /template/:templateId': 'TemplateController.updateTemplate',
-  'delete /template/:templateId': 'TemplateController.destroyTemplate',
+  'get /template': 'TemplateController.find',
+  'post /template': 'TemplateController.create',
+  'get /template/:templateId': 'TemplateController.findOne',
+  'put /template/:templateId': 'TemplateController.update',
+  'delete /template/:templateId': 'TemplateController.destroy',
 
   // routes para app rest api
-  'get /app': 'AppController.listMyApps',
-  'post /app': 'AppController.createApp',
-  'get /app/:appId': 'AppController.viewApp',
-  'put /app/:appId': 'AppController.updateApp',
-  'delete /app/:appId': 'AppController.destroyApp',
+  'get /app': 'AppController.findMyApps',
+  'post /app': 'AppController.create',
+  'get /app/:appId': 'AppController.findOne',
+  'put /app/:appId': 'AppController.update',
+  'delete /app/:appId': 'AppController.destroy',
 
   'get /app/:appId/plugin': 'AppController.listAttachedPlugins',
   'post /app/:appId/plugin': 'AppController.attachPlugin',

@@ -6,19 +6,22 @@
  */
 
 module.exports = {
-    listMyPlugins: function(req, res) {
+  listMyPlugins: function(req, res) {
 
-    },
-    createPlugin: function(req, res) {
+  },
+  find: function(req, res) {
 
-    },
-    viewPlugin: function(req, res) {
+  },
+  create: function(req, res) {
 
-    },
-    updatePlugin: function(req, res) {
+  },
+  findOne: function(req, res) {
 
-    },
-    destroyPlugin: function(req, res) {
+  },
+  update: function(req, res) {
 
-    }
+  },
+  destroy: function(req, res) {
+
+  }
 };

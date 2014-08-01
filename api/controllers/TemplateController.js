@@ -9,16 +9,19 @@ module.exports = {
   listMyTemplates: function(req, res) {
 
   },
-  createTemplate: function(req, res) {
+  find: function(req, res) {
 
   },
-  viewTemplate: function(req, res) {
+  create: function(req, res) {
 
   },
-  updateTemplate: function(req, res) {
+  findOne: function(req, res) {
 
   },
-  destroyTemplate: function(req, res) {
+  update: function(req, res) {
+
+  },
+  destroy: function(req, res) {
 
   }
 };
