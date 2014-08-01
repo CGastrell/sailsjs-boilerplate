@@ -87,6 +87,9 @@ module.exports.routes = {
     'get /app/:appId/template/:templateId': 'AppController.viewTemplateOptions',
     'put /app/:appId/template/:templateId': 'AppController.updateTemplateOptions',
     'delete /app/:appId/template/:templateId': 'AppController.deattachTemplate',
+  'get /app/:appId/build': 'AppController.listAppBuilds',
+  'post /app/:appId/build': 'AppController.createBuild',
+  'get /app/:appId/build/:buildId': 'AppController.viewBuild'
 
 
     // If a request to a URL doesn't match any of the custom routes above,
