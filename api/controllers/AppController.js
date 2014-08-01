@@ -3,19 +3,20 @@
  *
  * @description :: Server-side logic for managing apps
  * @help        :: See http://links.sailsjs.org/docs/controllers
+ * @todo revisar estructura de error de sails:
+ *
+ {
+    "error": "E_UNKNOWN",
+    "status": 500,
+    "summary": "Encountered an unexpected error",
+    "raw": {}
+}
+para generar errores propios del mismo formato
+ * 
  */
 "use strict";
 
 module.exports = {
-  listMyApps: function(req, res) {
-    User.findOne(req.session.user.id)
-      .populate('ownApps')
-      .exec(function(err, user) {
-        res.view({
-          userdata: user
-        });
-      });
-  },
   newAppForm: function(req, res) {
     res.view();
   },
@@ -42,14 +43,88 @@ module.exports = {
     });
 
   },
-  viewApp: function(req, res) {
-    App.findOne(req.param('id'), function appFound(err, app) {
-      res.view({
-        appdata: app
+  //rest - json only actions --cg
+
+  /**
+   * Lists apps owned by logged in user
+   *
+   * @returns array with apps.owner = user.id
+   * @method GET
+   * @endpoint /app
+   */
+  listMyApps: function(req, res) {
+    User.findOne(req.session.user.id)
+      .populate('ownApps')
+      .exec(function(err, user) {
+        if (err) {
+          return res.json(err);
+        }
+        res.json(user.ownApps);
       });
+  },
+  /**
+   * Creates an app
+   *
+   * app.owner is set by logged in user
+   *
+   * params according to models/app
+   * @returns object la app creada
+   * @method POST
+   * @endpoint /app
+   * @todo falta validar y controlar/asegurar los campos/attributes
+   */
+  createApp: function(req, res) {
+    var attrs = req.allParams();
+    App.create(attrs, function appCreated(err, app) {
+      if (err) {
+        return res.json(err);
+      }
+      app.owner = req.session.user.id;
+      app.save(function appSaveError(err) {
+        if (err) {
+          return res.json(err);
+        }
+        res.json(app);
+      })
+    });
+    // return res.json(app.toObject());
+  },
+  /**
+   * View app data for appId
+   *
+   * App MUST be owned by/allowed to logged in user
+   *
+   * @param app_id
+   * @method GET
+   * @endpoint /app/:appId
+   * @todo where owner o editors == user.id
+   */
+  viewApp: function(req, res) {
+    App.findOne(req.param('id'))
+    // .populate('editors')
+    // .where({
+    //   or: {
+    //     owner:{}
+    //     editors:{}
+    //   }
+    // })
+    .exec(function appFound(err, app) {
+      if (err) {
+        return res.json(err);
+      }
+      res.json(app);
     });
   },
-  //rest - json only actions --cg
+  updateApp: function(req, res) {
+
+  },
+  destroyApp: function(req, res) {
+
+  },
+  listAttachedPlugins: function(req, res) {
+
+  },
+
   /**
    * Adds a plugin (by id) to the app plugins collection (app.plugins)
    *
@@ -57,7 +132,8 @@ module.exports = {
    *
    * @param app_id
    * @param plugin_id
-   *
+   * @method POST
+   * @endpoint /app/:appId/plugins
    * @todo chequear que el plugin PUEDA ser agregado (esta pago o es free)
    */
   attachPlugin: function(req, res) {
@@ -75,40 +151,13 @@ module.exports = {
         return res.json(app.toObject());
       });
   },
-  /**
-   * Creates an app
-   *
-   * app.owner is set by logged in user
-   *
-   * params according to models/app
-   *
-   */
-  createApp: function(req, res) {
-    var attrs = req.allParams();
-    App.create(attrs).done(function appCreated(err, app) {
-      if (err)
-        return res.json(err);
-
-      res.json(app);
-    });
-    return res.json(app.toObject());
-  },
-  updateApp: function(req, res) {
-
-  },
-  destroyApp: function(req, res) {
-
-  },
-  listAttachedPlugins: function(req, res) {
-
-  },
   viewPluginOptions: function(req, res) {
 
   },
   updatePluginOptions: function(req, res) {
 
   },
-  deattachPlugin: function(req, res) {
+  dettachPlugin: function(req, res) {
 
   },
   viewTemplate: function(req, res) {
@@ -123,7 +172,7 @@ module.exports = {
   updateTemplateOptions: function(req, res) {
 
   },
-  deattachTemplate: function(req, res) {
+  dettachTemplate: function(req, res) {
 
   }
 };
