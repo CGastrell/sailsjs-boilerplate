@@ -6,8 +6,7 @@
  */
 
 module.exports = {
-
-  blueprints: {
+  _config: {
     actions: false,
     rest: false
   }
