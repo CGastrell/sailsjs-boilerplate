@@ -36,7 +36,7 @@ module.exports = {
       }
       // res.json(app);
       app.save(function(err) {
-        console.log(err);
+        // console.log(err);
         return res.redirect('/apps/new');
       });
       res.redirect('/apps/' + app.id + '/edit');
@@ -100,20 +100,26 @@ module.exports = {
    * @todo where owner o editors == user.id
    */
   viewApp: function(req, res) {
-    App.findOne(req.param('id'))
-    // .populate('editors')
-    // .where({
-    //   or: {
-    //     owner:{}
-    //     editors:{}
-    //   }
-    // })
-    .exec(function appFound(err, app) {
-      if (err) {
-        return res.json(err);
-      }
-      res.json(app);
-    });
+    App.findOne(req.param('appId'))
+      .populate('editors')
+      .populate('plugins')
+      .exec(function appFound(err, app) {
+        if (err) {
+          return res.json(err);
+        }
+        // console.log();
+        if (!app) {
+          console.log('app not found');
+          return res.json(module.exports.emptyError);
+        }
+        if (app.owner != req.session.user.id && !app.editors[req.session.user.id]) {
+          //el usuario logeado no se encuentra como owner ni editor
+          console.log('owner not allowed');
+          return res.json(module.exports.forbiddenError);
+        } else {
+          res.json(app);
+        }
+      });
   },
   updateApp: function(req, res) {
 
@@ -183,7 +189,18 @@ module.exports = {
   },
   viewBuild: function(req, res) {
 
+  },
+
+  emptyError: {
+    "error": "E_EMPTY",
+    "status": 404,
+    "summary": "Model doesn't exist",
+    "raw": {}
+  },
+  forbiddenError: {
+    "error": "E_FORBIDDEN",
+    "status": 403,
+    "summary": "User credentials don't match",
+    "raw": {}
   }
-
-
 };
