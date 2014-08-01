@@ -91,8 +91,9 @@ module.exports = {
 
       res.json(app);
     });
-    // console.log(attrs);
-    // res.json(attrs);
+
+    return res.json(app.toObject());
+
   },
   updateApp: function(req, res) {
 
@@ -136,5 +137,6 @@ module.exports = {
   viewBuild: function(req, res) {
 
   }
+
 
 };
