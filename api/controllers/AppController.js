@@ -174,5 +174,16 @@ module.exports = {
   },
   dettachTemplate: function(req, res) {
 
+  },
+  listAppBuilds: function(req, res) {
+
+  },
+  createBuild: function(req, res) {
+
+  },
+  viewBuild: function(req, res) {
+
   }
+
+
 };

@@ -30,6 +30,9 @@ module.exports = {
     pluginsParams: {
       type: 'json'
     },
+    template: {
+      model: 'Template'
+    },
     editors: {
       collection: 'User',
       via: 'allowedApps',

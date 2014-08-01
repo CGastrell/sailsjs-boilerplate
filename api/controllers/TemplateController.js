@@ -6,19 +6,19 @@
  */
 
 module.exports = {
-    listMyTemplates: function(req, res) {
+  listMyTemplates: function(req, res) {
 
-    },
-    createTemplate: function(req, res) {
+  },
+  createTemplate: function(req, res) {
 
-    },
-    viewTemplate: function(req, res) {
+  },
+  viewTemplate: function(req, res) {
 
-    },
-    updateTemplate: function(req, res) {
+  },
+  updateTemplate: function(req, res) {
 
-    },
-    destroyTemplate: function(req, res) {
+  },
+  destroyTemplate: function(req, res) {
 
-    }
+  }
 };
