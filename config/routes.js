@@ -23,74 +23,76 @@
 module.exports.routes = {
 
 
-    // Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, etc. depending on your
-    // default view engine) your home page.
-    //
-    // (Alternatively, remove this and add an `index.html` file in your `assets` directory)
-    // '/': {
-    //   view: 'homepage'
-    // },
+  // Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, etc. depending on your
+  // default view engine) your home page.
+  //
+  // (Alternatively, remove this and add an `index.html` file in your `assets` directory)
+  // '/': {
+  //   view: 'homepage'
+  // },
 
-    // I do this for having a controller
-    // that can pass through policies. -- osk
-    "/": "HomeController.homepage",
+  // I do this for having a controller
+  // that can pass through policies. -- osk
+  "/": "HomeController.homepage",
 
-    // Added these routes Following https://github.com/kasperisager/sails-generate-auth/ instructions -- osk
-    'get /login': 'AuthController.login',
-    'get /logout': 'AuthController.logout',
-    'get /register': 'AuthController.register',
+  // Added these routes Following https://github.com/kasperisager/sails-generate-auth/ instructions -- osk
+  'get /login': 'AuthController.login',
+  'get /logout': 'AuthController.logout',
+  'get /register': 'AuthController.register',
 
-    'post /auth/local': 'AuthController.callback',
-    'post /auth/local/:action': 'AuthController.callback',
+  'post /auth/local': 'AuthController.callback',
+  'post /auth/local/:action': 'AuthController.callback',
 
-    'get /auth/:provider': 'AuthController.provider',
-    'get /auth/:provider/callback': 'AuthController.callback',
+  'get /auth/:provider': 'AuthController.provider',
+  'get /auth/:provider/callback': 'AuthController.callback',
 
-    // Custom routes here...
-    // 'get /apps': 'AppController.listMyApps',
-    // 'get /apps/new': 'AppController.newAppForm',
-    // 'get /apps/:id/edit': 'AppController.viewApp',
-    // 'post /apps/new': 'AppController.createAppEx',
-
-
-    //routes para user rest api
-    'get /me': 'UserController.viewUser',
-    'put /me': 'UserController.updateUser',
-
-    //routes para plugin rest api
-    'get /plugin': 'PluginController.listMyPlugins',
-    'post /plugin': 'PluginController.createPlugin',
-    'get /plugin/:pluginId': 'PluginController.viewPlugin',
-    'put /plugin/:pluginId': 'PluginController.updatePlugin',
-    'delete /plugin/:pluginId': 'PluginController.destroyPlugin',
-
-    //routes para template rest api
-    'get /template': 'TemplateController.listMyTemplates',
-    'post /template': 'TemplateController.createTemplate',
-    'get /template/:templateId': 'TemplateController.viewTemplate',
-    'put /template/:templateId': 'TemplateController.updateTemplate',
-    'delete /template/:templateId': 'TemplateController.destroyTemplate',
-
-    // routes para app rest api
-    'get /app': 'AppController.listMyApps',
-    'post /app': 'AppController.createApp',
-    'get /app/:appId': 'AppController.viewApp',
-    'put /app/:appId': 'AppController.updateApp',
-    'delete /app/:appId': 'AppController.destroyApp',
-    'get /app/:appId/plugin': 'AppController.listAttachedPlugins',
-    'post /app/:appId/plugin': 'AppController.attachPlugin',
-    'get /app/:appId/plugin/:pluginId': 'AppController.viewPluginOptions',
-    'put /app/:appId/plugin/:pluginId': 'AppController.updatePluginOptions',
-    'delete /app/:appId/plugin/:pluginId': 'AppController.deattachPlugin',
-    'get /app/:appId/template': 'AppController.viewTemplate',
-    'post /app/:appId/template': 'AppController.attachTemplate',
-    'get /app/:appId/template/:templateId': 'AppController.viewTemplateOptions',
-    'put /app/:appId/template/:templateId': 'AppController.updateTemplateOptions',
-    'delete /app/:appId/template/:templateId': 'AppController.deattachTemplate',
+  // Custom routes here...
+  // 'get /apps': 'AppController.listMyApps',
+  // 'get /apps/new': 'AppController.newAppForm',
+  // 'get /apps/:id/edit': 'AppController.viewApp',
+  // 'post /apps/new': 'AppController.createAppEx',
 
 
-    // If a request to a URL doesn't match any of the custom routes above,
-    // it is matched against Sails route blueprints.  See `config/blueprints.js`
-    // for configuration options and examples.
+  //routes para user rest api
+  'get /me': 'UserController.viewUser',
+  'put /me': 'UserController.updateUser',
+
+  //routes para plugin rest api
+  'get /plugin': 'PluginController.listMyPlugins',
+  'post /plugin': 'PluginController.createPlugin',
+  'get /plugin/:pluginId': 'PluginController.viewPlugin',
+  'put /plugin/:pluginId': 'PluginController.updatePlugin',
+  'delete /plugin/:pluginId': 'PluginController.destroyPlugin',
+
+  //routes para template rest api
+  'get /template': 'TemplateController.listMyTemplates',
+  'post /template': 'TemplateController.createTemplate',
+  'get /template/:templateId': 'TemplateController.viewTemplate',
+  'put /template/:templateId': 'TemplateController.updateTemplate',
+  'delete /template/:templateId': 'TemplateController.destroyTemplate',
+
+  // routes para app rest api
+  'get /app': 'AppController.listMyApps',
+  'post /app': 'AppController.createApp',
+  'get /app/:appId': 'AppController.viewApp',
+  'put /app/:appId': 'AppController.updateApp',
+  'delete /app/:appId': 'AppController.destroyApp',
+
+  'get /app/:appId/plugin': 'AppController.listAttachedPlugins',
+  'post /app/:appId/plugin': 'AppController.attachPlugin',
+  'get /app/:appId/plugin/:pluginId': 'AppController.viewPluginOptions',
+  'put /app/:appId/plugin/:pluginId': 'AppController.updatePluginOptions',
+  'delete /app/:appId/plugin/:pluginId': 'AppController.dettachPlugin',
+
+  'get /app/:appId/template': 'AppController.viewTemplate',
+  'post /app/:appId/template': 'AppController.attachTemplate',
+  'get /app/:appId/template/:templateId': 'AppController.viewTemplateOptions',
+  'put /app/:appId/template/:templateId': 'AppController.updateTemplateOptions',
+  'delete /app/:appId/template/:templateId': 'AppController.dettachTemplate',
+
+
+  // If a request to a URL doesn't match any of the custom routes above,
+  // it is matched against Sails route blueprints.  See `config/blueprints.js`
+  // for configuration options and examples.
 
 };
