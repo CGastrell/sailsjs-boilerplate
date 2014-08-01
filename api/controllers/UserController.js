@@ -7,4 +7,8 @@
 
 module.exports = {
 
+  blueprints: {
+    actions:false,
+    rest: false
+  }
 };
