@@ -82,7 +82,7 @@ module.exports.routes = {
   'delete /app/:appId': 'AppController.destroy',
 
   'get /app/:appId/plugin': 'AppController.listAttachedPlugins',
-  'post /app/:appId/plugin': 'AppController.attachPlugin',
+  'post /app/:appId/plugin': 'AppController.attachPlugin', //esto tendria que ser put
   'get /app/:appId/plugin/:pluginId': 'AppController.viewPluginOptions',
   'put /app/:appId/plugin/:pluginId': 'AppController.updatePluginOptions',
   'delete /app/:appId/plugin/:pluginId': 'AppController.dettachPlugin',

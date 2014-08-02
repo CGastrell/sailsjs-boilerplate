@@ -17,32 +17,7 @@ para generar errores propios del mismo formato
 "use strict";
 
 module.exports = {
-  newAppForm: function(req, res) {
-    res.view();
-  },
-  createAppEx: function(req, res) {
-    // console.log(req.allParams());
-    // return;
-    App.create({
-      name: req.param('name'),
-      description: req.param('description'),
-      owner: req.session.user.id
-    }, function appCreated(err, app) {
-      if (err) {
-        req.session.flash = {
-          err: err
-        }
-        return res.redirect('/apps/new');
-      }
-      // res.json(app);
-      app.save(function(err) {
-        // console.log(err);
-        return res.redirect('/apps/new');
-      });
-      res.redirect('/apps/' + app.id + '/edit');
-    });
 
-  },
   //rest - json only actions --cg
 
   /**
@@ -52,7 +27,7 @@ module.exports = {
    * @method GET
    * @endpoint /app
    */
-  listMyApps: function(req, res) {
+  findMyApps: function(req, res) {
     User.findOne(req.session.user.id)
       .populate('ownApps')
       .exec(function(err, user) {
@@ -67,13 +42,14 @@ module.exports = {
    *
    * app.owner is set by logged in user
    *
-   * params according to models/app
+   * params according to App model
+   * @param _csrf
    * @returns object la app creada
    * @method POST
    * @endpoint /app
    * @todo falta validar y controlar/asegurar los campos/attributes
    */
-  createApp: function(req, res) {
+  create: function(req, res) {
     var attrs = req.allParams();
     App.create(attrs, function appCreated(err, app) {
       if (err) {
@@ -94,12 +70,18 @@ module.exports = {
    *
    * App MUST be owned by/allowed to logged in user
    *
+   * Checks for user.id == owner.id || editors[user.id] are
+   * done in policies/isAppOwnerOrEditor
+   *
    * @param app_id
    * @method GET
    * @endpoint /app/:appId
    * @todo where owner o editors == user.id
+   * @noteToSelf hasta que no se implemente el policy,
+   * esta action busca el appId y luego verifica permisos
+   * contra el session.user
    */
-  viewApp: function(req, res) {
+  findOne: function(req, res) {
     App.findOne(req.param('appId'))
       .populate('editors')
       .populate('plugins')
@@ -107,28 +89,80 @@ module.exports = {
         if (err) {
           return res.json(err);
         }
-        // console.log();
-        if (!app) {
-          console.log('app not found');
-          return res.json(module.exports.emptyError);
-        }
-        if (app.owner != req.session.user.id && !app.editors[req.session.user.id]) {
-          //el usuario logeado no se encuentra como owner ni editor
-          console.log('owner not allowed');
-          return res.json(module.exports.forbiddenError);
-        } else {
-          res.json(app);
-        }
+        res.json(app);
       });
   },
-  updateApp: function(req, res) {
+  /**
+   * Modify app
+   *
+   * App MUST be owned by/allowed to logged in user
+   *
+   * Checks for user.id == owner.id || editors[user.id] are
+   * done in policies/isAppOwnerOrEditor
+   *
+   * @param app_id
+   * @param _csrf
+   * @method PUT
+   * @endpoint /app/:appId
+   * @noteToSelf hacer homogeneas las respuestas de error y con saves/updates
+   */
+  update: function(req, res) {
+    App.findOne(req.param('appId'), function appFound(err, app) {
+      if (err) {
+        return res.json(err);
+      }
+      var params = req.allParams();
+      delete params["_csrf"];
+      delete params["appId"];
 
+      app = _.merge(app, params);
+
+      app.save(function errorOnSave(err) {
+        if (err) {
+          return res.json(err);
+        }
+        res.json({});
+      })
+    });
   },
-  destroyApp: function(req, res) {
+  /**
+   * Delete app
+   *
+   * App MUST be owned by/allowed to logged in user.
+   * There is no UNDO or soft delete
+   *
+   * Checks for user.id == owner.id || editors[user.id] are
+   * done in policies/isAppOwnerOrEditor
+   *
+   * @param app_id
+   * @param _csrf
+   * @method DELETE
+   * @endpoint /app/:appId
+   * @noteToSelf hacer homogeneas las respuestas de error y con saves/updates
+   */
+  destroy: function(req, res) {
+    App.findOne(req.param('appId'), function appFound(err, app) {
+      if (err) {
+        return res.json(err);
+      }
 
+      app.destroy(function errorOnSave(err) {
+        if (err) {
+          return res.json(err);
+        }
+        res.json({});
+      })
+    });
   },
   listAttachedPlugins: function(req, res) {
-
+    App.findOne(req.param('appId'))
+      .populate('plugins')
+      .exec(function appFound(err, app) {
+        if (err) {
+          return res.json(err);
+        }
+        res.json(app.plugins);
+      });
   },
 
   /**
@@ -141,11 +175,13 @@ module.exports = {
    * @method POST
    * @endpoint /app/:appId/plugins
    * @todo chequear que el plugin PUEDA ser agregado (esta pago o es free)
+   * @importante cambiar a PUT?
+   * el plugin ya esta creado y la app tambien, simplemente estoy
+   * asignando un pluginId al app.plugins
    */
   attachPlugin: function(req, res) {
-    var appId = req.param('id');
     var pluginId = req.param('plugin_id');
-    App.findOne(appId)
+    App.findOne(req.param('appId'))
       .populate('plugins')
       .exec(function appFound(err, app) {
         app.plugins.add(pluginId);

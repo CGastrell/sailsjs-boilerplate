@@ -35,7 +35,9 @@ module.exports.policies = {
   },
 
   "app": {
-    "": ["passport", "sessionAuth", "isAppOwnerOrEditor"]
+    "*": ["passport", "sessionAuth", "isAppOwnerOrEditor"],
+    "destroy": ["passport", "sessionAuth", "isAppOwner"],
+    "findMyApps": ["passport", "sessionAuth"]
   },
 
   "plugin": {
