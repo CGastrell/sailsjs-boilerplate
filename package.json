@@ -1,11 +1,11 @@
 {
-  "name": "tota",
+  "name": "sailsjs-boilerplate",
   "private": true,
   "version": "0.0.0",
-  "description": "a Sails application",
+  "description": "a Sails boilerplate",
   "keywords": [],
   "dependencies": {
-    "sails": "~0.10.0-rc11",
+    "sails": "~0.10.1",
     "sails-disk": "~0.10.0",
     "rc": "~0.3.3",
     "include-all": "~0.1.3",
