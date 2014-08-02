@@ -6,5 +6,8 @@
  */
 
 module.exports = {
-
+  _config: {
+    actions: false,
+    rest: false
+  }
 };
