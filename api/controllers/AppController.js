@@ -60,10 +60,9 @@ module.exports = {
         if (err) {
           return res.json(err);
         }
-        res.json(app);
+        res.json(app.toObject());
       })
     });
-    // return res.json(app.toObject());
   },
   /**
    * View app data for appId
@@ -89,7 +88,7 @@ module.exports = {
         if (err) {
           return res.json(err);
         }
-        res.json(app);
+        res.json(app.toObject());
       });
   },
   /**
@@ -180,7 +179,7 @@ module.exports = {
    * asignando un pluginId al app.plugins
    */
   attachPlugin: function(req, res) {
-    var pluginId = req.param('plugin_id');
+    var pluginId = req.param('pluginId');
     App.findOne(req.param('appId'))
       .populate('plugins')
       .exec(function appFound(err, app) {

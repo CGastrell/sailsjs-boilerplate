@@ -82,7 +82,8 @@ module.exports.routes = {
   'delete /app/:appId': 'AppController.destroy',
 
   'get /app/:appId/plugin': 'AppController.listAttachedPlugins',
-  'post /app/:appId/plugin': 'AppController.attachPlugin', //esto tendria que ser put
+  //esto tendria que ser put? el plugin ya existe y tiene que llegar con un id
+  'post /app/:appId/plugin/:pluginId': 'AppController.attachPlugin',
   'get /app/:appId/plugin/:pluginId': 'AppController.viewPluginOptions',
   'put /app/:appId/plugin/:pluginId': 'AppController.updatePluginOptions',
   'delete /app/:appId/plugin/:pluginId': 'AppController.dettachPlugin',
