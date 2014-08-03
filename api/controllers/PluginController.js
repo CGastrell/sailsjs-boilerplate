@@ -9,6 +9,13 @@ module.exports = {
   listMyPlugins: function(req, res) {
 
   },
+  /**
+   * View plugin data for pluginId
+   *
+   * @param pluginId
+   * @method GET
+   * @endpoint /plugin/:pluginId
+   */
   find: function(req, res) {
     Plugin.find().exec(function pluginsList(err, plugins) {
       if (err) {
@@ -17,6 +24,17 @@ module.exports = {
       res.json(plugins);
     });
   },
+  /**
+   * Creates a plugin
+   *
+   * plugin.owner is set by logged in user
+   *
+   * @returns object created plugin
+   * @method POST
+   * @endpoint /plugin
+   * @todo falta validar y controlar/asegurar los campos/attributes
+   * @todo needs testing
+   */
   create: function(req, res) {
     var attrs = req.allParams();
     Plugin.create(attrs, function pluginCreated(err, plug) {
@@ -34,7 +52,13 @@ module.exports = {
 
   },
   findOne: function(req, res) {
+    Plugin.findOne(req.param('pluginId'), function foundPlug(err, plug) {
+      if (err) {
+        return res.json(err);
+      }
 
+      res.json(plug);
+    });
   },
   update: function(req, res) {
 
