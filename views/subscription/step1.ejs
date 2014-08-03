@@ -1,0 +1,109 @@
+<h2>Billing information</h2>
+<div class="row">
+  <div class="col-md-6">
+    <form action="/" role="form" >
+      <fieldset>
+        <legend>Credit card data</legend>
+        <div class="form-group">
+          <label for="number">Number</label>
+          <input type="text" class="form-control" id="number" data-recurly="number">
+        </div>
+        <div class="form-group">
+          <label for="month">Month</label>
+          <input type="text" class="form-control" id="month" data-recurly="month">
+        </div>
+        <div class="form-group">
+          <label for="year">Year</label>
+          <input type="text" class="form-control" id="year" data-recurly="year">
+        </div>
+        <div class="form-group">
+          <label for="cvv">CVV</label>
+          <input type="text" class="form-control" id="cvv" data-recurly="cvv">
+        </div>
+        <div class="form-group">
+          <label for="first_name">First Name</label>
+          <input type="text" class="form-control" id="first_name" data-recurly="first_name">
+        </div>
+        <div class="form-group">
+          <label for="last_name">Last Name</label>
+          <input type="text" class="form-control" id="last_name" data-recurly="last_name">
+        </div>
+        <input type="hidden" name="recurly-token" data-recurly="token">
+      </fieldset>
+      <fieldset>
+        <legend>Billing address</legend>
+        <div class="form-group">
+          <label for="address1">Street Address</label>
+          <input type="text" class="form-control" id="address1" data-recurly="address1">
+        </div>
+        <div class="form-group">
+          <label for="address2">Street Address (continue here)</label>
+          <input type="text" class="form-control" id="address2" data-recurly="address2">
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" class="form-control" id="city" data-recurly="city">
+        </div>
+        <div class="form-group">
+          <label for="state">State</label>
+          <input type="text" class="form-control" id="state" data-recurly="state">
+        </div>
+        <div class="form-group">
+          <label for="postal_code">Postal code</label>
+          <input type="text" class="form-control" id="postal_code" data-recurly="postal_code">
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input type="text" class="form-control" id="country" data-recurly="country">
+        </div>
+        <div class="form-group">
+          <label for="vat_number">VAT number</label>
+          <input type="text" class="form-control" id="vat_number" data-recurly="vat_number">
+        </div>        
+        <input type="hidden" name="recurly-token" data-recurly="token">
+
+      </fieldset>
+      <div class="form-group">
+        <input type="submit" value="Purchase" class="btn btn-primary">
+      </div>
+    </form>
+  </div><!--col-md-->
+  <div class="col-md-6">
+    Or <button id="subscribewithpaypal" class="btn btn-success">Subscribe with PayPal &gt;&gt;</button>
+  </div>
+</div><!--row-->
+<script>
+$("#subscribewithpaypal").on("click", function() {
+  var opts = {
+    description: "Agreement"
+  };
+  recurly.paypal(opts, function(err, token) {
+    if (err) {
+      console.log(err);
+    } else {
+      
+    }
+  });
+});
+
+$('form').on('submit', function(event) {
+  recurly.configure("sc-HMy0cmwc4mQIQD2TqoWAUA");
+  var form = this;
+  event.preventDefault();
+  recurly.token(form, function(err, token) {
+    if (err) {
+      console.log(err);
+      $(err.fields).each(function(i, inputId) {
+        $("input#" + inputId).parent().addClass("has-error")
+        
+      })
+      // handle error using err.code and err.fields
+    } else {
+      // recurly.js has filled in the 'token' field, so now we can submit the
+      // form to your server; alternatively, you can access token.id and do
+      // any processing you wish
+      form.submit();
+    }
+  });
+});
+</script>

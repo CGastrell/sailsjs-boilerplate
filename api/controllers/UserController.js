@@ -6,10 +6,14 @@
  */
 
 module.exports = {
+
+  _config: {
+    actions: false,
+    rest: false
+  },
   viewUser: function(req, res) {
 
   },
-  update: function(req, res) {
+  update: function(req, res) {}
 
-  }
 };
