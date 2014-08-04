@@ -8,7 +8,7 @@
 module.exports = {
 
   attributes: {
-    app: {
+    appId: {
       model: 'App'
     },
     buildNumber: {

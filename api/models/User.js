@@ -34,6 +34,9 @@ module.exports = {
       collection: 'App',
       via: 'editors'
     },
+    adquiredPlugins: {
+      collection: 'Plugin'
+    },
     account: {
       type: 'string',
       defaultsTo: 'free'

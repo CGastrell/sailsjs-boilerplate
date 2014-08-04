@@ -27,8 +27,8 @@ module.exports = {
       via: 'attachedToApps',
       dominant: true
     },
-    pluginsParams: {
-      type: 'json'
+    attachedPluginOptions: {
+      collection: 'PluginOptions'
     },
     template: {
       model: 'Template'
@@ -38,7 +38,12 @@ module.exports = {
       via: 'allowedApps',
       dominant: true
     },
-    status: 'json'
+    appBuild: {
+      collection: 'Build'
+    },
+    keys: {
+      type: 'json'
+    }
   }
 };
 
