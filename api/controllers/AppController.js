@@ -61,7 +61,7 @@ module.exports = {
           return res.json(err);
         }
         res.json(app.toObject());
-      })
+      }) |
     });
   },
   /**
@@ -153,6 +153,7 @@ module.exports = {
       })
     });
   },
+
   listAttachedPlugins: function(req, res) {
     App.findOne(req.param('appId'))
       .populate('plugins')
@@ -226,6 +227,40 @@ module.exports = {
 
   },
 
+  showApp: function(req, res) {
+    App.findOne(req.param('appId'))
+      .populate('plugins')
+      .populate('appBuild')
+      .populate('template')
+      .populate('attachedPluginOptions')
+      .exec(function appFound(err, app) {
+        if (err) {
+          return res.json(err);
+        }
+        var pluginIds = _.map(app.plugins, function(plugin) {
+          return plugin._id;
+        })
+        delete app.plugins;
+        app.plugins = pluginIds;
+
+        var latestBuild = _.max(app.appBuild, 'buildNumber');
+        app.latestBuild = latestBuild;
+
+        delete app.appBuild;
+        delete app.template.description;
+        delete app.template.attachedToApps;
+        delete app.template.owner;
+
+        _.forEach(app.attachedPluginOptions, function(item) {
+          delete item.app;
+          delete item.plugin;
+        })
+
+
+        res.json(app.toObject());
+      });
+  },
+
   emptyError: {
     "error": "E_EMPTY",
     "status": 404,
@@ -239,3 +274,72 @@ module.exports = {
     "raw": {}
   }
 };
+User.find({
+  where: {
+    name: {
+      '>=': 'a'
+    }
+  },
+  limit: 15,
+  skip: 15,
+  sort: 'name ASC'
+}, cb);
+// {
+//     "title":"PhoneGap: Getting Started",
+//     "id":2,
+//     "package":"com.phonegap.getting.started",
+//     "version":"1.0.0",
+//     "repo":"https://github.com/phonegap/phonegap-start.git",
+//     "description":"A template for getting started with
+//             PhoneGap development and build.phonegap.com",
+//     "debug":false,
+//     "private":true,
+//     "link":"/api/v1/apps/2",
+//     "build_count":12,
+//     "status": {
+//         "android":"complete",
+//         "blackberry":"complete",
+//         "ios":"complete",
+//         "symbian":"complete",
+//         "webos":"complete",
+//         "winphone":"complete"
+//     },
+//     "download":{
+//         "android":"/api/v1/apps/1/android",
+//         "blackberry":"/api/v1/apps/1/blackberry",
+//         "ios":"/api/v1/apps/1/ios",
+//         "symbian":"/api/v1/apps/1/symbian",
+//         "webos":"/api/v1/apps/1/webos",
+//         "winphone":"/api/v1/apps/1/winphone"
+//     },
+//     "error":{},
+//     "icon":{
+//         "filename":"big-icon.png",
+//         "link":"/api/v1/apps/2/icon"
+//     },
+//     "role":"admin",
+//     "keys":{},
+//     "collaborators":{
+//         "link":"/api/v1/apps/9/collaborators",
+//         "active":[
+//             {
+//                 "id":9,
+//                 "person":"andrew.lunny@nitobi.com",
+//                 "role":"admin",
+//                 "link":"/api/v1/apps/9/collaborators/9"
+//             },
+//             {
+//                 "id":13,
+//                 "person":"foo@bar.com",
+//                 "role":"developer",
+//                 "link":"/api/v1/apps/9/collaborators/13"
+//             }
+//         ],
+//         "pending":[
+//             {
+//                 "person":"nobody@nitobi.com",
+//                 "role":"tester"
+//             }
+//         ]
+//     }
+// }
