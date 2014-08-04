@@ -659,10 +659,11 @@ line-height: 1.428571429;
 /*==============================================
     MEDIA QUERIES     
     =============================================*/
+     @media(min-width:768px) {
      .wo-navbar-side {
         margin: 90px 130px 0 !important;
     }
-    
+    }
  
  @media(min-width:768px) {
      #page-wrapper{
