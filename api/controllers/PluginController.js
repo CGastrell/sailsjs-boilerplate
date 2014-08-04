@@ -7,7 +7,15 @@
 
 module.exports = {
   listMyPlugins: function(req, res) {
-
+    Plugin.find({}).where({
+      owner: req.session.user.id
+    })
+      .exec(function(err, plugins) {
+        if (err) {
+          return res.json(err);
+        }
+        res.json(plugins);
+      });
   },
   /**
    * View plugin data for pluginId
@@ -61,9 +69,37 @@ module.exports = {
     });
   },
   update: function(req, res) {
+    Plugin.findOne(req.param('pluginId'), function foundPlug(err, plug) {
+      if (err) {
+        return res.json(err);
+      }
+      var params = req.allParams();
+      delete params["_csrf"];
+      delete params["pluginId"];
 
+      plug = _.merge(plug, params);
+
+      plug.save(function errorOnSave(err) {
+        if (err) {
+          return res.json(err);
+        }
+        res.json({});
+      })
+    });
   },
-  destroy: function(req, res) {
 
+  destroy: function(req, res) {
+    Plugin.findOne(req.param('pluginId'), function appFound(err, plug) {
+      if (err) {
+        return res.json(err);
+      }
+
+      plug.destroy(function errorOnSave(err) {
+        if (err) {
+          return res.json(err);
+        }
+        res.json({});
+      })
+    });
   }
 };
