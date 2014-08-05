@@ -61,7 +61,7 @@ module.exports = {
           return res.json(err);
         }
         res.json(app.toObject());
-      }) |
+      });
     });
   },
   /**
@@ -274,16 +274,19 @@ module.exports = {
     "raw": {}
   }
 };
-User.find({
-  where: {
-    name: {
-      '>=': 'a'
-    }
-  },
-  limit: 15,
-  skip: 15,
-  sort: 'name ASC'
-}, cb);
+
+// User.find({
+//   where: {
+//     name: {
+//       '>=': 'a'
+//     }
+//   },
+//   limit: 15,
+//   skip: 15,
+//   sort: 'name ASC'
+// }, cb);
+
+
 // {
 //     "title":"PhoneGap: Getting Started",
 //     "id":2,
