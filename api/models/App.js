@@ -16,12 +16,12 @@ module.exports = {
     owner: {
       model: 'User'
     },
-    version: 'string',
+    version: {
+      type: 'string',
+      defaultsTo: '0.0.0'
+    },
     'private': 'boolean',
     icon: 'string',
-    template: {
-      model: 'Template'
-    },
     plugins: { //habtm
       collection: 'Plugin',
       via: 'attachedToApps',
