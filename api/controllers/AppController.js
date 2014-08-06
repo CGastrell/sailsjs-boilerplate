@@ -288,6 +288,19 @@ module.exports = {
 
 
 // {
+//   _id: "theAppIdFromMongoDb",
+//   name: "app name",
+//   description: "the long description for the app",
+//   owner: "userId",
+//   version: "0.0.1",
+//   private: false,
+//   icon: "url/of/the/icon.png",
+//   template: "templateId",
+//   plugins: ["pluginId_1","pluginId_2"],
+//   attachedPluginOptions: []
+// }
+
+// {
 //     "title":"PhoneGap: Getting Started",
 //     "id":2,
 //     "package":"com.phonegap.getting.started",
