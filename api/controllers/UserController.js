@@ -12,7 +12,7 @@ module.exports = {
     rest: false
   },
   viewUser: function(req, res) {
-
+    res.json(req.session.user);
   },
   update: function(req, res) {}
 
