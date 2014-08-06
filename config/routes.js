@@ -23,28 +23,28 @@
 module.exports.routes = {
 
   /***************************************************************************
-  *                                                                          *
-  * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
-  * etc. depending on your default view engine) your home page.              *
-  *                                                                          *
-  * (Alternatively, remove this and add an `index.html` file in your         *
-  * `assets` directory)                                                      *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
+   * etc. depending on your default view engine) your home page.              *
+   *                                                                          *
+   * (Alternatively, remove this and add an `index.html` file in your         *
+   * `assets` directory)                                                      *
+   *                                                                          *
+   ***************************************************************************/
 
   // '/': {
   //   view: 'homepage'
   // },
-  
+
   /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  *  If a request to a URL doesn't match any of the custom routes above, it  *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * Custom routes here...                                                    *
+   *                                                                          *
+   *  If a request to a URL doesn't match any of the custom routes above, it  *
+   * is matched against Sails route blueprints. See `config/blueprints.js`    *
+   * for configuration options and examples.                                  *
+   *                                                                          *
+   ***************************************************************************/
 
   // I do this for having a controller
   // that can pass through policies. -- osk
@@ -62,10 +62,10 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback',
 
   // Custom routes here...
-  'get /apps': 'AppController.listMyApps',
-  'get /apps/new': 'AppController.newAppForm',
-  'get /apps/:id/edit': 'AppController.viewApp',
-  'post /apps/new': 'AppController.createApp',
+  "/pricing": "Static.pricing",
+  "/contactus": "Static.contactus",
+  "/tos": "Static.tos",
+  "/privacypolicy": "Static.privacypolicy"
 
   // If a request to a URL doesn't match any of the custom routes above,
   // it is matched against Sails route blueprints.  See `config/blueprints.js`
