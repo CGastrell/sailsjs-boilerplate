@@ -33,6 +33,10 @@ module.exports = {
     attachedToApps: {
       collection: 'App',
       via: 'template'
+    },
+    acquiredBy: {
+      collection: 'User',
+      via: 'acquiredTemplates'
     }
   }
 };

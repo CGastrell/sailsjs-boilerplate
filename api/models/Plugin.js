@@ -32,9 +32,9 @@ module.exports = {
       type: 'float',
       defaultsTo: 0.0
     },
-    adquiredBy: {
+    acquiredBy: {
       collection: 'User',
-      via: 'adquiredPlugins'
+      via: 'acquiredPlugins'
     }
 
   }

@@ -38,9 +38,17 @@ module.exports = {
       collection: 'Plugin',
       via: 'owner'
     },
-    adquiredPlugins: {
+    acquiredPlugins: {
       collection: 'Plugin',
-      via: 'adquiredBy'
+      via: 'acquiredBy'
+    },
+    ownTemplates: {
+      collection: 'Template',
+      via: 'owner'
+    },
+    acquiredTemplates: {
+      collection: 'Template',
+      via: 'acquiredBy'
     },
     account: {
       type: 'string',
