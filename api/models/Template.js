@@ -17,6 +17,19 @@ module.exports = {
     owner: {
       model: 'User'
     },
+    css: {
+      type: 'string' //cuerpo del css
+    },
+    js: {
+      type: 'string' //cuerpo del js
+    },
+    fonts: {
+      type: 'array'
+      //array de urls donde buscar las fonts
+      //esto tiene que estar documentado para que dentro
+      //de los css el tipo haga el import con las url absolutas
+      //a los fonts sino no vamos a poder importarlas
+    },
     attachedToApps: {
       collection: 'App',
       via: 'template'
