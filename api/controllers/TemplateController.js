@@ -6,6 +6,26 @@
  */
 
 module.exports = {
+  createMushyTemplate: function(req, res) {
+    Template.create({
+      name: 'Mushy',
+      description: 'The mushy template',
+      price: 0,
+      owner: req.session.user.id
+    }, function(err, plug) {
+      if (err) {
+        return res.json(err);
+      }
+
+      plug.save(function(err) {
+        if (err) {
+          return res.json(err);
+        }
+        res.json(plug);
+      })
+    });
+
+  },
   listMyTemplates: function(req, res) {
 
   },
@@ -25,17 +45,19 @@ module.exports = {
    */
   create: function(req, res) {
     var attrs = req.allParams();
+    var qs = require('qs');
     Template.create(attrs, function templateCreated(err, tpl) {
       if (err) {
         return res.json(err);
       }
       tpl.owner = req.session.user.id;
-      tpl.save(function tplSaveError(err) {
-        if (err) {
-          return res.json(err);
-        }
-        res.json(tpl.toObject());
-      })
+      res.json(attrs);
+      // tpl.save(function tplSaveError(err) {
+      //   if (err) {
+      //     return res.json(err);
+      //   }
+      //   res.json(tpl.toObject());
+      // });
     });
   },
   findOne: function(req, res) {

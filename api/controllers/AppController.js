@@ -84,11 +84,12 @@ module.exports = {
     App.findOne(req.param('appId'))
       .populate('editors')
       .populate('plugins')
+      .populate('attachedPluginOptions')
       .exec(function appFound(err, app) {
         if (err) {
           return res.json(err);
         }
-        res.json(app.toObject());
+        res.json(app);
       });
   },
   /**
@@ -175,29 +176,58 @@ module.exports = {
    * @method POST
    * @endpoint /app/:appId/plugins
    * @todo chequear que el plugin PUEDA ser agregado (esta pago o es free)
-   * @importante cambiar a PUT?
-   * el plugin ya esta creado y la app tambien, simplemente estoy
-   * asignando un pluginId al app.plugins
+   * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   * @bug no puedo agregar 2 veces el mismo plugin!!!
+   * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
    */
   attachPlugin: function(req, res) {
     var pluginId = req.param('pluginId');
     App.findOne(req.param('appId'))
       .populate('plugins')
+      .populate('attachedPluginOptions')
       .exec(function appFound(err, app) {
-        app.plugins.add(pluginId);
-        app.save(function(err) {
-          if (err) {
-            return res.json(err);
-          }
-        });
-        return res.json(app.toObject());
+        Plugin.findOne(pluginId)
+          .populate('acquiredBy')
+          .exec(function plugFound(err, plug) {
+            if (err) {
+              return res.json(err);
+            }
+            if (!plug) {
+              return res.json(emptyError);
+            }
+            var canUsePlugin = false;
+            if (plug.owner === req.session.user.id) {
+              canUsePlugin = true; //es owner
+            } else if (plug.price == 0) {
+              canUsePlugin = true; //es gratis
+            } else if (plug.acquiredBy[req.session.user.id]) {
+              canUsePlugin = true; //ya lo compro
+            }
+
+            if (!canUsePlugin) {
+              return res.json(forbiddenError);
+            }
+            app.plugins.add(pluginId);
+            app.attachedPluginOptions.add(
+              _.defaults({
+                plugin: pluginId
+              }, plug.defaults)
+            );
+            app.save(function(err) {
+              if (err) {
+                return res.json(err);
+              }
+
+            });
+            return res.json(app);
+          });
       });
   },
   viewPluginOptions: function(req, res) {
 
   },
   updatePluginOptions: function(req, res) {
-
+    PluginOptions.find()
   },
   dettachPlugin: function(req, res) {
 

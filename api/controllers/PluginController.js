@@ -6,6 +6,32 @@
  */
 
 module.exports = {
+  createMushyPlugin: function(req, res) {
+    Plugin.create({
+      name: 'Mushy',
+      description: 'The mushy plugin',
+      version: '0.0.0',
+      structure: '<button data-role="{{role}}" class="btn btn-primary">{{label}}</button>',
+      defaults: {
+        role: 'button',
+        label: 'My button'
+      },
+      price: 0,
+      owner: req.session.user.id
+    }, function(err, plug) {
+      if (err) {
+        return res.json(err);
+      }
+
+      plug.save(function(err) {
+        if (err) {
+          return res.json(err);
+        }
+        res.json(plug);
+      });
+    });
+
+  },
   listMyPlugins: function(req, res) {
     Plugin.find({}).where({
       owner: req.session.user.id

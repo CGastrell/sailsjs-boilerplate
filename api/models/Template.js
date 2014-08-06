@@ -37,6 +37,10 @@ module.exports = {
     acquiredBy: {
       collection: 'User',
       via: 'acquiredTemplates'
+    },
+    price: {
+      type: 'float',
+      defaultsTo: 0.0
     }
   }
 };

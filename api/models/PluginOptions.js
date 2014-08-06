@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-
+  schema: false,
   attributes: {
     app: {
       model: 'App'
@@ -19,3 +19,12 @@ module.exports = {
     }
   }
 };
+
+// {
+//   app: "651989198ihgkukcku",
+//   plugin: "pqwienpq9ncq[2n93nc",
+//   parent: "headerBar",
+
+//   role: "button",
+//   label: "Visit my homepage"
+// }
