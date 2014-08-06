@@ -34,8 +34,13 @@ module.exports = {
       collection: 'App',
       via: 'editors'
     },
+    ownPlugins: {
+      collection: 'Plugin',
+      via: 'owner'
+    },
     adquiredPlugins: {
-      collection: 'Plugin'
+      collection: 'Plugin',
+      via: 'adquiredBy'
     },
     account: {
       type: 'string',

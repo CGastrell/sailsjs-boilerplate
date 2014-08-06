@@ -28,7 +28,8 @@ module.exports = {
       dominant: true
     },
     attachedPluginOptions: {
-      collection: 'PluginOptions'
+      collection: 'PluginOptions',
+      via: 'app'
     },
     template: {
       model: 'Template'
@@ -39,7 +40,8 @@ module.exports = {
       dominant: true
     },
     appBuild: {
-      collection: 'Build'
+      collection: 'Build',
+      via: 'appId'
     },
     keys: {
       type: 'json'

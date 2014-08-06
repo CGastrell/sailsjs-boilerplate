@@ -27,6 +27,14 @@ module.exports = {
     attachedToApps: {
       collection: 'App',
       via: 'plugins'
+    },
+    price: {
+      type: 'float',
+      defaultsTo: 0.0
+    },
+    adquiredBy: {
+      collection: 'User',
+      via: 'adquiredPlugins'
     }
 
   }
