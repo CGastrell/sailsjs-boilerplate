@@ -14,7 +14,7 @@ module.exports = {
   viewUser: function(req, res) {
     res.json(req.session.user);
   },
-  update: function(req, res) {}
+  update: function(req, res) {},
   /**
    * Change paid/free plan
    *
